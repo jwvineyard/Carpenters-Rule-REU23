@@ -41,7 +41,7 @@ function arc_from_angle(Θ, ℓ)
 end
 @test arc_from_angle([1.5707963267948966, 3.9269908169872414], [1.0, 1.4142135623730951]) ≈ [[0.0, 0.0], [0.0, 1.0], [-1.0, 0.0]] atol = 1e-8
 
-function grad_E(V, cycle)
+function grad_E(V, cycle=false)
     """
     Parameters:
         V (array): Vertices of an arc-and-cycle set
@@ -152,19 +152,18 @@ function grad_E(V, cycle)
     ∇E
 end
 
-function timestep(Θ, V, Δt)
-    ∇E = grad_E(V, false)
+function timestep(Θ, V, Δt, cycle=false)
+    ∇E = grad_E(V, cycle)
     Θ′ = Θ - Δt * normalize(∇E)
     return Θ′
 end
 
-function unfold_anim(V, Δt, t, snapshot_delay=4)
+function unfold_anim(V, Δt, t, snapshot_delay=4, cycle=false)
     """
     Generate an unfolding animation for a given configuration. Exports gif to folder where program was run.
 
         Parameters:
             V (array): Vertex configuration.
-            Θ (array): Angles corresponding to V.
             Δt (float): Timestep. 
             t (float): Total time to run unfolding. 
             snapshot_delay (int): Delay between frames to snapshot the image.
@@ -172,13 +171,13 @@ function unfold_anim(V, Δt, t, snapshot_delay=4)
         Returns:
             None
     """
-    Θ = angle_from_arc(V)
+    global Θ = angle_from_arc(V)
     ℓ = length_from_arc(V)
     j = 0
 
     anim = @animate while j * Δt ≤ t 
         # Update Θ and V
-        global Θ = timestep(Θ, V, Δt)
+        Θ = timestep(Θ, V, Δt, cycle)
         global V = arc_from_angle(Θ, ℓ)
 
         curr_t = round(Δt * j, digits=2)
@@ -188,8 +187,9 @@ function unfold_anim(V, Δt, t, snapshot_delay=4)
             seriestype=:scatter, 
             primary=false, 
             axis=([], false),
-            xlimits=(-20, 20),
-            ylimits=(-20, 20))
+            # xlimits=(-20, 20),
+            # ylimits=(-20, 20)
+            )
         plot!(first.(V), last.(V), label="Time = $curr_t")
     end every snapshot_delay
 
