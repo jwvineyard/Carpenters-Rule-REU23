@@ -152,13 +152,13 @@ function grad_E(V, cycle=false)
     ∇E
 end
 
-function timestep(Θ, V, Δt, cycle=false)
+function timestep!(Θ, V, Δt, cycle=false)
     ∇E = grad_E(V, cycle)
-    Θ′ = Θ - Δt * normalize(∇E)
-    return Θ′
+    Θ = Θ - Δt * normalize(∇E)
+    return Θ
 end
 
-function unfold_anim(V, Δt, t, snapshot_delay=4, cycle=false)
+function unfold_anim!(V, Δt, t, snapshot_delay=4, cycle=false)
     """
     Generate an unfolding animation for a given configuration. Exports gif to folder where program was run.
 
@@ -177,7 +177,7 @@ function unfold_anim(V, Δt, t, snapshot_delay=4, cycle=false)
 
     anim = @animate while j * Δt ≤ t 
         # Update Θ and V
-        Θ = timestep(Θ, V, Δt, cycle)
+        Θ = timestep!(Θ, V, Δt, cycle)
         global V = arc_from_angle(Θ, ℓ)
 
         curr_t = round(Δt * j, digits=2)
