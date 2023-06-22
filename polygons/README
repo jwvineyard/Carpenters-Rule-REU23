@@ -12,12 +12,9 @@ which can be found here:
 
 https://github.com/cgalab/genpoly-rpg
 
-Then, the clean.sh script cleans up the output from RPG into a common format.
+Then, the clean.py script cleans up the output from RPG into a common format.
 
 The display.py script can be used to view a polygon.
 
-The convert.sh script turns a polygon file into a format suitable to copy and
+The convert.py script turns a polygon file into a format suitable to copy and
 paste into the Julia unfolding program.
-
-Note that both clean.sh and convert.sh were tested only on linux, and might not
-work on MacOS (and likely will not work on Windows).
