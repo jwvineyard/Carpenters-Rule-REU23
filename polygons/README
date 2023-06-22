@@ -18,3 +18,6 @@ The display.py script can be used to view a polygon.
 
 The convert.py script turns a polygon file into a format suitable to copy and
 paste into the Julia unfolding program.
+
+The alphashape directory contains another method for generating random shapes
+that has not been as developed yet.
