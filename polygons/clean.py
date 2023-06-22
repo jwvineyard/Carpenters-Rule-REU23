@@ -15,7 +15,6 @@ args = parser.parse_args()
 try:
     with open(args.filename) as f:
         lines = f.readlines()
-
 except IOError:
     print("Error: Could not open \"" + args.filename + "\" for reading.")
     raise SystemExit(1)
