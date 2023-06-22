@@ -1,0 +1,23 @@
+In order to test the unfolding algorithm, we need some interesting polygons and
+arcs to try and unfold.
+
+The files forest-200.txt, phoenix-100.txt, starship-50.txt, and hedgehog-25.txt
+contain polygons with the indicated number of vertices encoded as a list of
+ordered pairs. The noun at the start of each file is what I think they look
+like in order to distinguish them. For example, phoenix-100.txt contains a
+polygon with 100 vertices that I think looks like a phoenix.
+
+The polygons were first generated using the Random Polygon Generator (RPG),
+which can be found here:
+
+https://github.com/cgalab/genpoly-rpg
+
+Then, the clean.sh script cleans up the output from RPG into a common format.
+
+The display.py script can be used to view a polygon.
+
+The convert.sh script turns a polygon file into a format suitable to copy and
+paste into the Julia unfolding program.
+
+Note that both clean.sh and convert.sh were tested only on linux, and might not
+work on MacOS (and likely will not work on Windows).
